@@ -817,6 +817,27 @@
         .dark .btn-brand-navy { background-color: #243751 !important; }
         .dark .btn-brand-primary { color: #fff !important; }
 
+
+        /* ===== Dark mode readability: text-first contrast ===== */
+        .dark .content-card :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .lecture-player-card :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .lecture-tool-panel :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .week-intro-card :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .feedback-card :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .notes-hub-card :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .task-week-body :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .nested-accordion :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary),
+        .dark .goal-journey-card :where(h1,h2,h3,h4,h5,h6,p,label,li,strong,small,summary) {
+            color: #ffffff !important;
+        }
+        .dark [class*="text-[--accent-navy]"] { color: #ffffff !important; }
+        .dark [class*="text-gray-"] { color: #ffffff !important; }
+        .dark [class*="text-[--accent-green]"] { color: var(--accent-green) !important; }
+        .dark .text-red-500, .dark .text-red-600, .dark .text-red-400 { color: #fca5a5 !important; }
+        .dark .text-yellow-800, .dark .text-yellow-400, .dark .text-yellow-200 { color: #fde68a !important; }
+        .dark input, .dark textarea, .dark select { color: #ffffff !important; }
+        .dark select option { background: #172334 !important; color: #ffffff !important; }
+
         .premium-floating-player:fullscreen,
         .premium-floating-player:-webkit-full-screen {
             inset: 0 !important;
@@ -1615,7 +1636,7 @@
         };
 
         const SPEECH_LANGUAGES = [
-            ['ar-EG','العربية — مصر'], ['ar-SA','العربية — السعودية'], ['en-US','English — US'], ['en-GB','English — UK'],
+            ['ar-EG','عربي مصري — الأفضل للعربي مع كلمات English'], ['ar-SA','العربية — السعودية'], ['en-US','English — US'], ['en-GB','English — UK'],
             ['fr-FR','Français'], ['de-DE','Deutsch'], ['es-ES','Español'], ['it-IT','Italiano'], ['tr-TR','Türkçe'],
             ['hi-IN','हिन्दी'], ['ur-PK','اردو'], ['pt-BR','Português'], ['ru-RU','Русский'], ['zh-CN','中文'], ['ja-JP','日本語'], ['ko-KR','한국어']
         ];
@@ -1624,7 +1645,7 @@
             const [isRecording, setIsRecording] = useState(false);
             const [isDictating, setIsDictating] = useState(false);
             const [message, setMessage] = useState('');
-            const [language, setLanguage] = useState(() => localStorage.getItem('smarterSpeechLanguage') || (navigator.language || 'ar-EG'));
+            const [language, setLanguage] = useState(() => localStorage.getItem('smarterSpeechLanguage') || 'ar-EG');
             const [previewUrl, setPreviewUrl] = useState('');
             const recorderRef = useRef(null);
             const streamRef = useRef(null);
@@ -1668,7 +1689,7 @@
                 if (!Recognition) return flash('تحويل الكلام لنص غير متاح في المتصفح ده. جرّب Chrome على الموبايل أو اللابتوب.');
                 try {
                     const recognition = new Recognition(); recognitionRef.current = recognition;
-                    recognition.lang = language; recognition.continuous = true; recognition.interimResults = false;
+                    recognition.lang = language || 'ar-EG'; recognition.continuous = true; recognition.interimResults = false; recognition.maxAlternatives = 3;
                     recognition.onresult = event => {
                         let finalText = '';
                         for (let i = event.resultIndex; i < event.results.length; i++) if (event.results[i].isFinal) finalText += event.results[i][0].transcript + ' ';
@@ -1686,11 +1707,13 @@
                     <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                         <div className="flex-grow">
                             <p className="font-bold text-sm text-[--accent-navy] dark:text-white flex items-center gap-2"><Icon name="mic-2" className="w-4 h-4 text-[--accent-green]" /> اكتب بصوتك أو احفظ ملاحظة صوتية</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">اكتب كود أي لغة مثل ar-EG أو en-US. دقة التحويل واللغات المتاحة تعتمد على محرك المتصفح، والتسجيل الصوتي يُحفظ على الجهاز الحالي.</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">عربي مصري هو الاختيار الافتراضي، وغالبًا يحافظ على كلمات English الواضحة داخل الكلام. دقة الكلام المختلط تعتمد على محرك المتصفح.</p>
                         </div>
-                        <div className="min-w-[190px]">
-                            <input list="smarter-speech-languages" value={language} onChange={e => setLanguage(e.target.value)} className="app-field !py-2 text-sm" placeholder="مثال: ar-EG أو en-US" aria-label="لغة الإملاء الصوتي" />
-                            <datalist id="smarter-speech-languages">{SPEECH_LANGUAGES.map(([code, label]) => <option key={code} value={code}>{label}</option>)}</datalist>
+                        <div className="min-w-[240px]">
+                            <label className="block text-xs font-bold mb-1 text-[--accent-navy] dark:text-white">لغة الإملاء</label>
+                            <select value={language} onChange={e => setLanguage(e.target.value)} className="app-field !py-2 text-sm" aria-label="لغة الإملاء الصوتي">
+                                {SPEECH_LANGUAGES.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
+                            </select>
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2">
