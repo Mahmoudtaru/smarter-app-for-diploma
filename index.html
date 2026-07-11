@@ -780,6 +780,67 @@
         .task-action-item { border: 1px solid #e5e7eb; border-radius: .9rem; padding: 1rem; background: #fff; }
         .dark .task-action-item { border-color: #40506a; background: #1a2638; }
 
+
+        /* ===== Notes visual polish + stronger dark mode ===== */
+        .notes-panel-highlight {
+            border: 1px solid rgba(146,180,59,.28);
+            border-right: 5px solid var(--accent-green);
+            background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(146,180,59,.08));
+            border-radius: 1rem;
+            box-shadow: 0 10px 26px rgba(30,45,68,.07);
+        }
+        .dark .notes-panel-highlight {
+            background: linear-gradient(135deg, #122033, #0f1a29);
+            border-color: rgba(146,180,59,.34);
+            box-shadow: 0 14px 32px rgba(0,0,0,.22);
+        }
+        .notes-panel-header { display:flex; align-items:flex-start; gap:.9rem; }
+        .notes-panel-icon {
+            width: 3rem; height: 3rem; border-radius: .95rem; display:grid; place-items:center; flex-shrink:0;
+            background: var(--accent-green); color: var(--accent-navy);
+            box-shadow: 0 12px 24px rgba(146,180,59,.24);
+        }
+        .notes-panel-title { color: var(--accent-navy); }
+        .notes-panel-subtitle { color: #5b6474; }
+        .dark .notes-panel-title { color: #f8fbff; }
+        .dark .notes-panel-subtitle { color: #c9d5e4; }
+        .dark .text-gray-200 { color: #f5f7fb !important; }
+        .dark .text-gray-300 { color: #e6ecf5 !important; }
+        .dark .text-gray-400 { color: #d5dde9 !important; }
+        .dark .text-gray-500 { color: #d8dfeb !important; }
+        .dark .text-gray-600 { color: #e1e7f0 !important; }
+        .dark .text-gray-700 { color: #e9eef6 !important; }
+        .dark .text-gray-800 { color: #f5f8fc !important; }
+        .dark .border-gray-700 { border-color: rgba(255,255,255,.14) !important; }
+        .app-field::placeholder { color: #6b7280; }
+        .dark .app-field::placeholder { color: #b7c4d7 !important; }
+        .dark .btn-brand-navy { background-color: #243751 !important; }
+        .dark .btn-brand-primary { color: #fff !important; }
+
+        .premium-floating-player:fullscreen,
+        .premium-floating-player:-webkit-full-screen {
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-height: none !important;
+            border-radius: 0 !important;
+            border: 0 !important;
+            background: #000 !important;
+            z-index: 9999 !important;
+        }
+        .premium-floating-player:fullscreen .floating-video-frame,
+        .premium-floating-player:-webkit-full-screen .floating-video-frame {
+            flex: 1;
+            min-height: 0;
+            background: #000;
+        }
+        .premium-floating-player:fullscreen iframe,
+        .premium-floating-player:-webkit-full-screen iframe,
+        .premium-floating-player:fullscreen video,
+        .premium-floating-player:-webkit-full-screen video {
+            width: 100%; height: 100%;
+        }
+
     </style>
 </head>
 <body class="bg-bg-light dark:bg-bg-dark text-text-dark dark:text-text-light transition-colors duration-300">
@@ -1762,10 +1823,16 @@
                     </button>
 
                     <div className="lesson-separator"></div>
-                    <div className="lecture-tool-panel p-3 sm:p-4 space-y-4">
-                        <div className="flex items-center justify-between gap-3">
-                            <div><h5 className="font-bold text-[--accent-navy] dark:text-white flex items-center gap-2"><Icon name="notebook-pen" className="w-5 h-5 text-[--accent-green]" /> ملاحظاتي على المحاضرة</h5><p className="text-xs text-gray-500 dark:text-gray-400 mt-1">اكتب، اتكلم لتحويل صوتك لنص، أو احفظ تسجيل صوتي بعنوان واضح.</p></div>
-                            <button type="button" onClick={() => setIsToolsOpen(prev => !prev)} className="lecture-chip-button rounded-lg px-3 py-2 font-semibold inline-flex items-center gap-1"><Icon name={isToolsOpen ? 'chevron-up' : 'chevron-down'} className="w-4 h-4" /> {isToolsOpen ? 'إخفاء' : 'إظهار'}</button>
+                    <div className="lecture-tool-panel notes-panel-highlight p-3 sm:p-4 space-y-4">
+                        <div className="flex items-start justify-between gap-3 flex-wrap sm:flex-nowrap">
+                            <div className="notes-panel-header min-w-0 flex-grow">
+                                <span className="notes-panel-icon"><Icon name="notebook-pen" className="w-5 h-5" /></span>
+                                <div className="min-w-0">
+                                    <h5 className="notes-panel-title font-bold text-lg sm:text-xl flex items-center gap-2">ملاحظاتي على المحاضرة</h5>
+                                    <p className="notes-panel-subtitle text-sm mt-1 leading-relaxed">اكتب، اتكلم لتحويل صوتك لنص، أو احفظ تسجيل صوتي بعنوان واضح.</p>
+                                </div>
+                            </div>
+                            <button type="button" onClick={() => setIsToolsOpen(prev => !prev)} className="lecture-chip-button rounded-lg px-3 py-2 font-semibold inline-flex items-center gap-1 flex-shrink-0"><Icon name={isToolsOpen ? 'chevron-up' : 'chevron-down'} className="w-4 h-4" /> {isToolsOpen ? 'إخفاء' : 'إظهار'}</button>
                         </div>
                         {copyMessage && <div className="text-sm font-bold text-[--accent-green] bg-green-50 dark:bg-slate-900 border border-[--accent-green]/30 rounded-lg px-3 py-2">{copyMessage}</div>}
                         {manualCopyText && <div className="manual-copy-box space-y-2"><div className="flex items-center justify-between gap-2"><p className="text-sm font-bold text-[--accent-navy] dark:text-white">نسخ يدوي</p><button type="button" onClick={() => setManualCopyText('')} className="text-sm font-bold text-red-500">إغلاق</button></div><textarea value={manualCopyText} readOnly onFocus={e => e.target.select()} onClick={e => e.target.select()} /><p className="text-xs text-gray-600 dark:text-gray-300">اضغط مطولًا على النص ثم اختار Copy.</p></div>}
@@ -4050,18 +4117,43 @@
 
         const FloatingLecturePlayer = ({ activeLecture, onClose }) => {
             const [isTheater, setIsTheater] = useState(true);
+            const playerShellRef = useRef(null);
             useEffect(() => { if (activeLecture) setIsTheater(true); }, [activeLecture?.lecture?.id]);
+            useEffect(() => {
+                const unlockOrientation = () => { try { screen.orientation?.unlock?.(); } catch (error) {} };
+                const onFullScreenChange = () => {
+                    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+                    if (!isFs) unlockOrientation();
+                };
+                document.addEventListener('fullscreenchange', onFullScreenChange);
+                document.addEventListener('webkitfullscreenchange', onFullScreenChange);
+                return () => {
+                    document.removeEventListener('fullscreenchange', onFullScreenChange);
+                    document.removeEventListener('webkitfullscreenchange', onFullScreenChange);
+                    unlockOrientation();
+                };
+            }, []);
             if (!activeLecture) return null;
             const { lecture, weekTitle } = activeLecture;
             const isYouTube = lecture.sourceType === 'youtube' || !!lecture.youtubeId;
             const previewUrl = !isYouTube ? (lecture.previewUrl || buildLecturePreviewUrl(lecture.fileId)) : '';
+            const openFullScreen = async () => {
+                const el = playerShellRef.current;
+                if (!el) return;
+                try {
+                    if (el.requestFullscreen) await el.requestFullscreen({ navigationUI: 'hide' });
+                    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+                } catch (error) {}
+                try { await screen.orientation?.lock?.('landscape'); } catch (error) {}
+            };
             return (
                 <>
                     {isTheater && <button type="button" aria-label="تصغير المشغل" className="player-theater-backdrop" onClick={() => setIsTheater(false)}></button>}
-                    <div className={`premium-floating-player ${isTheater ? 'theater' : ''}`}>
+                    <div ref={playerShellRef} className={`premium-floating-player ${isTheater ? 'theater' : ''}`}>
                         <div className="premium-floating-header">
                             <div className="min-w-0"><p className="text-sm sm:text-base font-bold truncate">{lecture.title}</p><p className="text-xs text-white/70 truncate">{weekTitle}</p></div>
                             <div className="flex items-center gap-1 flex-shrink-0">
+                                <button type="button" onClick={openFullScreen} title="ملء الشاشة"><Icon name="monitor-up" className="w-4 h-4" /></button>
                                 <button type="button" onClick={() => setIsTheater(prev => !prev)} title={isTheater ? 'تصغير داخل التطبيق' : 'فتح بحجم كبير'}><Icon name={isTheater ? 'minimize-2' : 'maximize-2'} className="w-4 h-4" /></button>
                                 <button type="button" onClick={onClose} title="إغلاق المحاضرة"><Icon name="x" className="w-4 h-4" /></button>
                             </div>
