@@ -838,6 +838,68 @@
         .dark input, .dark textarea, .dark select { color: #ffffff !important; }
         .dark select option { background: #172334 !important; color: #ffffff !important; }
 
+
+        /* ===== Dark mode final contrast audit ===== */
+        .assistant-reminder-card {
+            background: #f0f8ee;
+            border: 1px solid rgba(146,180,59,.28);
+            border-right-width: 4px;
+        }
+        .assistant-reminder-title { color: #76962f; }
+        .assistant-reminder-copy { color: #334155; }
+        .dark .assistant-reminder-card {
+            background: #172334 !important;
+            border-color: rgba(146,180,59,.45) !important;
+            box-shadow: 0 12px 30px rgba(0,0,0,.24);
+        }
+        .dark .assistant-reminder-title { color: var(--accent-green) !important; }
+        .dark .assistant-reminder-copy,
+        .dark .assistant-reminder-copy * { color: #ffffff !important; }
+
+        .workflows-highlight-card {
+            background: linear-gradient(135deg, #f2faef, #ffffff);
+        }
+        .workflows-highlight-copy { color: var(--accent-navy); }
+        .dark .workflows-highlight-card {
+            background: linear-gradient(135deg, #172334, #101a28) !important;
+            border-color: rgba(146,180,59,.55) !important;
+        }
+        .dark .workflows-highlight-copy { color: #ffffff !important; }
+
+        .notice-surface {
+            background: #f8fafc;
+            color: var(--accent-navy);
+            border-color: rgba(146,180,59,.28);
+        }
+        .task-note-card { background: #fff9e8; color: #713f12; }
+        .workflow-tip-card { background: #fffdf5; border-color: #fde08b; }
+        .dark .notice-surface,
+        .dark .task-note-card,
+        .dark .workflow-tip-card {
+            background: #172334 !important;
+            color: #ffffff !important;
+            border-color: rgba(146,180,59,.38) !important;
+        }
+        .dark .notice-surface :where(p,span,strong,h1,h2,h3,h4,h5,h6,li,label),
+        .dark .task-note-card :where(p,span,strong,h1,h2,h3,h4,h5,h6,li,label),
+        .dark .workflow-tip-card :where(p,span,strong,h1,h2,h3,h4,h5,h6,li,label) {
+            color: #ffffff !important;
+        }
+        .dark .notice-surface [class*="text-[--accent-green]"],
+        .dark .task-note-card [class*="text-[--accent-green]"] { color: var(--accent-green) !important; }
+
+        /* Hard fallback for Tailwind light surfaces that previously stayed bright in dark mode. */
+        .dark .bg-white,
+        .dark .bg-gray-50,
+        .dark .bg-green-50,
+        .dark .bg-yellow-50,
+        .dark .bg-red-50,
+        .dark .bg-blue-50,
+        .dark [class*="bg-white/"],
+        .dark [class*="bg-slate-800/"] {
+            background-color: #172334 !important;
+        }
+
         .premium-floating-player:fullscreen,
         .premium-floating-player:-webkit-full-screen {
             inset: 0 !important;
@@ -911,11 +973,11 @@
         // Reminder Component
         const Reminder = ({ children }) => {
             return (
-                <div className="mb-6 p-4 border-r-4 border-[--accent-green] bg-green-50 dark:bg-slate-800 rounded-lg shadow-md flex items-start gap-4">
+                <div className="assistant-reminder-card mb-6 p-4 border-r-4 border-[--accent-green] rounded-lg shadow-md flex items-start gap-4">
                     <Icon name="brain-circuit" className="w-8 h-8 text-[--accent-green] flex-shrink-0 mt-1" />
                     <div>
-                        <h3 className="text-lg font-bold text-[--accent-green] mb-1">رسالة من مساعدك الذكي</h3>
-                        <div className="text-gray-700 dark:text-gray-200 text-sm">{children}</div>
+                        <h3 className="assistant-reminder-title text-lg font-bold mb-1">رسالة من مساعدك الذكي</h3>
+                        <div className="assistant-reminder-copy text-sm leading-relaxed">{children}</div>
                     </div>
                 </div>
             );
@@ -1510,7 +1572,7 @@
                 summary: "تولّد أصواتًا طبيعية، تضبط النطق والمشاعر، وتستخدم الدبلجة والمزامنة والأفاتار بطريقة عملية.",
                 icon: "audio-lines", 
                 lectures: [
-                    { id: "lecture-06", title: "المحاضرة السادسة", fileId: "1cjef3EwweC5myGpLzHiyN0RVXy3Js9OT" }
+                    { id: "lecture-06", title: "المحاضرة السادسة", youtubeId: "JdL9oDSXnOs", youtubeUrl: "https://youtu.be/JdL9oDSXnOs?si=LLFeEDh0UhlQpPHE", sourceType: "youtube", summary: "السحر الصوتي والمزامنة بالذكاء الاصطناعي." }
                 ], 
                 guides: [
                     { title: "شرح المحاضرة السادسة", url: "https://mahmoudtaru.github.io/Smarter-With-Ai-Round-4-week-6/" }
@@ -1521,7 +1583,7 @@
                 summary: "تبني مساعدًا متخصصًا يفهم شغلك وملفاتك وطريقتك، ويوفر عليك تكرار نفس التعليمات كل مرة.",
                 icon: "bot", 
                 lectures: [
-                    { id: "lecture-07", title: "المحاضرة السابعة", fileId: "1fuha1lZoFJjeGvpixq7VtLr5NDX8q_cg" }
+                    { id: "lecture-07", title: "المحاضرة السابعة", youtubeId: "I26dPygWscI", youtubeUrl: "https://youtu.be/I26dPygWscI?si=uOpPRUPWWo_ateOv", sourceType: "youtube", summary: "صناعة المساعدين الشخصيين المتخصصين." }
                 ], 
                 guides: [
                     { title: "شرح المحاضرة السابعة", url: "https://mahmoudtaru.github.io/Smarter-With-Ai-Round-4-Week-7/" }
@@ -2420,7 +2482,7 @@
                         </section>
 
                         {item.tasks.length > 0 ? <div className="space-y-4">{groups.map(group => <section key={group.id} className={groups.length > 1 || group.title ? 'task-lecture-group' : ''}>{group.title && <h4 className="font-bold text-lg text-[--accent-navy] dark:text-white flex items-center gap-2 mb-4"><Icon name="book-open-check" className="w-5 h-5 text-[--accent-green]" /> {group.title}</h4>}<ul className="space-y-4">{group.tasks.map((task, idx) => renderTask(task, idx, group.id))}</ul></section>)}</div> : <p className="text-gray-600 dark:text-gray-300 text-center p-4">التاسكات ستكون متاحة قريبًا بإذن الله.</p>}
-                        {item.note && <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border-r-4 border-yellow-500 rounded-lg text-yellow-800 dark:text-yellow-200 font-semibold flex items-start gap-3 shadow-sm"><Icon name="lightbulb" className="w-6 h-6 flex-shrink-0" /><p className="leading-relaxed">{item.note}</p></div>}
+                        {item.note && <div className="task-note-card notice-surface p-4 border-r-4 border-yellow-500 rounded-lg font-semibold flex items-start gap-3 shadow-sm"><Icon name="lightbulb" className="w-6 h-6 flex-shrink-0" /><p className="leading-relaxed">{item.note}</p></div>}
                     </div>}
                 </div>
             );
@@ -2534,7 +2596,7 @@
                         ))}
                     </div>
 
-                    <div className="bg-green-50 dark:bg-green-900/20 border border-[--accent-green] rounded-lg p-4 flex items-center gap-3 shadow-sm transform transition-all hover:scale-[1.01] mt-6">
+                    <div className="notice-surface border border-[--accent-green] rounded-lg p-4 flex items-center gap-3 shadow-sm transform transition-all hover:scale-[1.01] mt-6">
                         <Icon name="heart" className="w-8 h-8 text-[--accent-green] flex-shrink-0 animate-pulse" />
                         <p className="text-gray-800 dark:text-gray-200 font-bold leading-relaxed text-sm sm:text-base">
                             الديدلاين مهم بس حتى لو أخرت، فـ احنا نحب نشوفك بتشاركنا محاولاتك عشان تكون Smarter With AI 💚
@@ -3459,7 +3521,7 @@
                         </a>
                     </div>
 
-                    <div className="bg-green-50 dark:bg-slate-800/80 border-2 border-[--accent-green] rounded-xl p-6 text-center shadow-md transform transition-all hover:scale-[1.01]">
+                    <div className="workflows-highlight-card border-2 border-[--accent-green] rounded-xl p-6 text-center shadow-md transform transition-all hover:scale-[1.01]">
                         <a 
                             href="https://mahmoudtaru.github.io/Smarter-Workflows/" 
                             target="_blank"
@@ -3469,7 +3531,7 @@
                             <Icon name="route" className="w-6 h-6"/>
                             <span>مسارات Workflows - أذكى بمساعدة الذكاء الاصطناعي</span>
                         </a>
-                        <p className="mt-4 text-[--accent-navy] dark:text-gray-200 font-bold text-base sm:text-lg">
+                        <p className="workflows-highlight-copy mt-4 font-bold text-base sm:text-lg">
                             مساراتك، أدواتك، مساعدينك في مكان واحد
                         </p>
                     </div>
@@ -3631,7 +3693,7 @@
                                         )}
 
                                         {workflow.tip && (
-                                            <div className="bg-[#fffdf5] dark:bg-yellow-900/10 p-4 rounded-lg border border-[#fde08b] dark:border-yellow-700/50 flex items-start gap-3 mt-6">
+                                            <div className="notice-surface workflow-tip-card p-4 rounded-lg border flex items-start gap-3 mt-6">
                                                  <Icon name="lightbulb" className="w-6 h-6 text-yellow-500 flex-shrink-0 mt-1"/>
                                                  <div className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed w-full">
                                                      <span className="font-bold text-gray-900 dark:text-white block mb-2">نصائح ذهبية:</span>
@@ -3700,7 +3762,7 @@
                                         title="هشام مصطفي أكاديمي (دبلومات مدفوعة)"
                                         description="ميزة الدبلومة: سعر قليل، شامل، جروب متابعة وفيدباك."
                                     />
-                                    <div className="p-3 bg-gray-50 border-t text-gray-800 dark:text-gray-200">
+                                    <div className="notice-surface p-3 border-t">
                                         <span className="font-semibold flex items-center gap-2"><Icon name="youtube" className="w-5 h-5" /> لو عاوز حاجة مجانية (يوتيوب):</span>
                                     </div>
                                     <RecommendationLink 
@@ -3734,7 +3796,7 @@
                                         title="ترشيحات مجانية ومدفوعة"
                                         description="بوست شامل لأفضل مصادر تعلم كتابة المحتوى"
                                     />
-                                    <div className="p-4 bg-green-50 dark:bg-green-900/10 border-t border-green-100 dark:border-green-800">
+                                    <div className="notice-surface p-4 border-t">
                                         <h6 className="font-bold text-[--accent-green] mb-2 flex items-center gap-2">
                                             <Icon name="tag" className="w-4 h-4" />
                                             تنويه خاص لخريجين Smarter With AI:
@@ -3816,7 +3878,7 @@
                                         icon="map"
                                         title="خارطة الطريق لتعلمها"
                                     />
-                                    <div className="p-3 bg-gray-50 dark:bg-slate-800/30 border-t text-gray-800 dark:text-gray-200">
+                                    <div className="notice-surface p-3 border-t">
                                         <div className="flex items-center gap-3">
                                             <Icon name="list-checks" className="w-5 h-5 text-[--accent-green] flex-shrink-0" />
                                             <span className="flex-grow font-semibold">أفضل مصادر مجانية لتعلم n8n (بدون برمجة):</span>
